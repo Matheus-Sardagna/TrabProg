@@ -1,0 +1,109 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#titulo{
+    font-family: sans-serif;
+    color:#13293D;
+    margin-left: 7%;
+
+}
+
+#disc {
+    font-family: sans-serif;
+    color: #006494;
+    margin-left: 10%;
+}
+
+fieldset {
+    border:0;
+}
+
+body{
+    background-color:#E8F1F2;
+    font-family: sans-serif;
+    font-size: 1em;
+    color:#247BA0;
+    margin-left:36%;
+    margin-top:2%;
+    justify-content: center;
+}
+
+input, select, textarea, button{
+    border-radius: 5px;
+}
+
+.camp{
+margin-bottom: 1em;
+
+}
+
+.camp label{
+    margin-bottom: 0.2em;
+    color: #1b98e0;
+}
+
+.button {
+    font-size: 1.2em;
+    background:#006494;
+    border: 0;
+    margin-bottom: 1em;
+    color:#006494;
+    padding: 0.2em 0.6em;
+    position: absolute;
+    top:90%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.btIncluir {
+    min-width: 130px;
+    height: 40px;
+    color: #fff;
+    padding: 5px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background: #3a86ff;
+    box-shadow: 0 5px #4433ff;
+    animation: pisca .9s linear infinite;
+  }
+  .btIncluir {
+    box-shadow: 0 3px #4433ff;
+    top: 1px;
+  }
+  .btIncluir {
+    box-shadow: 0 0 #4433ff;
+    top: 5px;
+  }
+
+
+  table, th, td {
+    border: 1px solid;
+  }
+
+  th, td {
+    width: 100px;
+    padding: 10px;
+  }
+
+
+
+
+/*body {
+    animation: pisca .9s linear infinite;
+}
+*/
+@keyframes pisca {
+    0% { background-color: rgb(111, 14, 207); }
+    50% { background-color: #ff0000; }
+    100% { background-color: #1a2847; }
+}

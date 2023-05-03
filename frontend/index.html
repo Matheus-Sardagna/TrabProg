@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="br">
+  <head>
+    <link rel="stylesheet" type="text/css" href="formulario.css" media="screen">
+    <title>Cadastro de endereço</title>
+</head>
+
+
+<body>
+
+  <div>
+        <h1 id="titulo"> Cadastro de endereço</h1>
+        <p id="disc">Insira as informaçoes do endereço</p>
+        <br>
+  </div>
+
+  <form id="meuform" onsubmit="return false;">
+    <fieldset class="caixa">
+      <div class="camp">
+        <label for="nome"><strong>Nome:</strong></label>
+        <input type="text" id="nome" name="nome" value="" />
+        
+      </div>
+      <div class="camp">
+        <label for="email"><strong>Email:</strong></label>
+        <input type="text" id="email" name="email" value="" />
+      </div>
+
+      <div class="camp">
+        <label for="telefone"><strong>Telefone:</strong></label>
+        <input type="text" id="telefone" name="telefone" value="" />
+      </div>
+
+      <div class="camp">
+        <label for="nmrCasa"><strong>Número Casa:</strong></label>
+        <input type="text" id="nmrCasa" name="nmrCasa" value=""/>
+      </div>
+
+      <div class="camp">
+        <label for="cep"><strong>CEP</strong></label>
+        <input type="text" id="cep" name="cep" value="" />
+      </div>
+      </fieldset>
+
+      <div class="camp">
+        <button class="btIncluir" onsubmit="return false;">Incluir Endereço</button>
+      </div>
+    </form>
+
+
+
+
+    <table id="table">
+      <thead>
+          <tr>
+              <th>Id</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Telefone</th>
+              <th>nmrCasa</th>
+              <th>cep</th>
+          </tr>
+      </thead>
+      <tbody id="endereço"></tbody>
+
+      </tbody>
+  </table>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+    <script>
+            $(function () {
+              listagem_generica("endereço", ['id', 'nome', 'email', 'telefone', 'nmrCasa', 'cep'], "<tr>", "<td>", "</td>");
+
+              $(document).on("click", ".btIncluir", function () {
+                var rota = "http://localhost:5000/incluir_endereço";
+
+                var vetor_dados = $("#meuform").serializeArray();
+
+                var chave_valor = {};
+                for (var i = 0; i < vetor_dados.length; i++) {
+                  chave_valor[vetor_dados[i]["name"]] = vetor_dados[i]["value"];
+                }
+
+                var dados_json = JSON.stringify(chave_valor);
+
+                var acao = $.ajax({
+                  url: rota,
+                  method: "POST",
+                  dataType: "json",
+                  contentType: "application/json",
+                  data: dados_json,
+                });
+
+                acao.done(function (retorno) {
+                  try {
+                    if (retorno.resultado == "ok") {
+                      alert("Endereço cadastrado com Sucesso!!");
+                    } else {
+                      alert("Deu algum erro no backend: " + retorno.detalhes);
+                    }
+                  } catch (error) {
+                    alert(
+                      "Erro ao tentar fazer o ajax: " +
+                        error +
+                        "\nResposta da ação: " +
+                        retorno
+                    );
+                  }
+                });
+
+                acao.fail(function (jqXHR, textStatus) {
+                  mensagem = encontrarErro(jqXHR, textStatus, rota);
+                  alert("Erro na chamada ajax: " + mensagem);
+                });
+              });
+
+              function listagem_generica(nome_div, lista_campos, elemento_html, html_antes, html_depois) {
+
+      
+      var rota = `http://127.0.0.1:5000/listar_endereço`;
+
+      var acao = $.ajax({
+          url: rota,
+          dataType: 'json', 
+      });
+
+      
+      acao.done(function (retorno) {
+          
+          try {
+              if (retorno.resultado == "ok") {
+                 
+                  for (var reg of retorno.detalhes) {
+                      
+                      var paragrafo = $(elemento_html);
+                      
+                      var s = '';
+                      for (campo of lista_campos) {
+                         
+                          var teste = String(campo);
+                          if (teste.indexOf(".") !== -1) {
+                             
+                              var partes = teste.split(".");
+                              
+                              var valor = reg[partes[0]][partes[1]];
+                             
+                              if (valor == undefined) {
+                                  valor = "";
+                              }
+                              s = s + html_antes + valor + html_depois;
+                          } else {
+                              s = s + html_antes + reg[campo] + html_depois;
+                          }
+                      }
+                      paragrafo.html(`${s}`);
+                      
+                      $('#' + nome_div).append(paragrafo);
+                  }
+              } else {
+                  alert("Erro informado pelo backend: " + retorno.detalhes);
+              }
+          } catch (error) { 
+              alert("Erro ao tentar fazer o ajax: " + error +
+                  "\nResposta da ação: " + retorno.detalhes);
+          }
+      });
+
+      
+      acao.fail(function (jqXHR, textStatus) {
+          mensagem = encontrarErro(jqXHR, textStatus, rota);
+          alert("Erro na chamada ajax: " + mensagem);
+      });
+
+    }
+
+
+              function encontrarErro(jqXHR, textStatus, rota) {
+                var msg = "";
+                if (jqXHR.status === 0) {
+                  msg =
+                    "Não foi possível conectar, " +
+                    "verifique se o endereço do backend está certo" +
+                    " e se o backend está rodando.";
+                } else if (jqXHR.status == 404) {
+                  msg =
+                    "A URL informada não foi encontrada no " +
+                    "servidor [erro 404]: " +
+                    rota;
+                } else if (jqXHR.status == 500) {
+                  msg =
+                    "Erro interno do servidor [erro 500], " +
+                    "verifique nos logs do servidor";
+                } else if (textStatus === "parsererror") {
+                  msg = "Falha ao decodificar o resultado json";
+                } else if (textStatus === "timeout") {
+                  msg = "Tempo excessivo de conexão, estourou o limite (timeout)";
+                } else if (textStatus === "abort") {
+                  msg = "Requisição abortada (abort)";
+                } else {
+                  msg = "Erro desconhecido: " + jqXHR.responseText;
+                }
+                return msg;
+              }
+            });
+    </script>
+  </body>
+</html>
