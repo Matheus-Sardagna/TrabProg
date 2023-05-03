@@ -5,14 +5,14 @@
 
 #titulo{
     font-family: sans-serif;
-    color:#13293D;
+    color:#c9da0c;
     margin-left: 7%;
 
 }
 
 #disc {
     font-family: sans-serif;
-    color: #006494;
+    color: #000000;
     margin-left: 10%;
 }
 
@@ -21,11 +21,11 @@ fieldset {
 }
 
 body{
-    background-color:#E8F1F2;
+    background-color:#ffffff;
     font-family: sans-serif;
     font-size: 1em;
-    color:#247BA0;
-    margin-left:36%;
+    color:#2d2c2d;
+    margin: left 0%;
     margin-top:2%;
     justify-content: center;
 }
@@ -41,15 +41,15 @@ margin-bottom: 1em;
 
 .camp label{
     margin-bottom: 0.2em;
-    color: #1b98e0;
+    color: #11870d;
 }
 
 .button {
-    font-size: 1.2em;
-    background:#006494;
+    font-size: 1.5em;
+    background:#519400;
     border: 0;
     margin-bottom: 1em;
-    color:#006494;
+    color:#00942f;
     padding: 0.2em 0.6em;
     position: absolute;
     top:90%;
@@ -63,7 +63,7 @@ margin-bottom: 1em;
     min-width: 130px;
     height: 40px;
     color: #fff;
-    padding: 5px 10px;
+    padding: 5px 15px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -72,9 +72,8 @@ margin-bottom: 1em;
     outline: none;
     border-radius: 5px;
     border: none;
-    background: #3a86ff;
+    background: #03701a;
     box-shadow: 0 5px #4433ff;
-    animation: pisca .9s linear infinite;
   }
   .btIncluir {
     box-shadow: 0 3px #4433ff;
@@ -82,7 +81,7 @@ margin-bottom: 1em;
   }
   .btIncluir {
     box-shadow: 0 0 #4433ff;
-    top: 5px;
+    top: 3px;
   }
 
 
@@ -94,16 +93,3 @@ margin-bottom: 1em;
     width: 100px;
     padding: 10px;
   }
-
-
-
-
-/*body {
-    animation: pisca .9s linear infinite;
-}
-*/
-@keyframes pisca {
-    0% { background-color: rgb(111, 14, 207); }
-    50% { background-color: #ff0000; }
-    100% { background-color: #1a2847; }
-}
